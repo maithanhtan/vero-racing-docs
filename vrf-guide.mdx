@@ -1,0 +1,141 @@
+---
+title: 'Vero Racing Front - VRF'
+description: 'Hướng dẫn sử dụng Vero Racing Front - Giao diện quản trị hệ thống racing'
+---
+
+# Vero Racing Front (VRF) - Hướng dẫn sử dụng
+
+## Tổng quan
+
+**Vero Racing Front (VRF)** là giao diện quản trị web để giám sát và quản lý lệnh racing trong hệ thống Vero Racing. Ứng dụng cung cấp theo dõi lệnh, xử lý thông báo trạng thái, và quản lý hoạt động trading.
+
+## Tính năng chính
+
+
+- **Giám sát lệnh**: Theo dõi lệnh racing
+- **Xử lý thông báo**: Phân tích và hiển thị trạng thái lệnh
+- **Giám sát hệ thống**: Theo dõi kết nối API và VRB
+- **Quản lý lệnh**: Tải, xóa và quản lý lệnh
+- **Tìm kiếm và lọc**: Tìm lệnh theo tiêu chí
+
+
+### Thành phần Dashboard
+- **Thống kê lệnh**: Đếm tổng lệnh và tính toán giá trị racing
+- **Trạng thái hệ thống**: Giám sát sức khỏe và kết nối VRB
+- **Bảng hoạt động**: Thông tin chi tiết lệnh với sắp xếp
+
+
+## Bắt đầu
+
+### Yêu cầu hệ thống
+- Trình duyệt web (Chrome, Firefox, Safari, Edge)
+- Truy cập đến Vero Racing API server
+- API key hợp lệ (nếu được yêu cầu)
+
+### Thiết lập ban đầu
+
+1. **Truy cập ứng dụng**
+   - Mở trình duyệt web
+   - Điều hướng đến URL: [racing.verolabs.co](https://racing.verolabs.co)
+
+
+2. **Cấu hình API Settings**
+   - Nhấn nút **"API Settings"** góc trên bên phải
+   - Cấu hình các thiết lập sau:
+     - **VRB Endpoint**: Endpoint VRB server của bạn (mặc định: `https://localhost:8080`)
+
+     - **API Key**: Khóa xác thực của bạn (nếu được yêu cầu)
+   - Nhấn **"Save Settings"** để áp dụng thay đổi
+
+
+## Hướng dẫn thao tác
+
+### Tải lệnh
+
+
+
+1. Nhấn nút **"Load Order From OMS"**
+2. Hệ thống tạo lệnh và gửi đến dịch vụ Vero Racing
+3. Lệnh mới được tải và hiển thị trong bảng
+4. Hiển thị số lượng lệnh đã tải trong thông báo thành công
+
+
+
+#### Xóa lệnh
+1. Nhấn nút **"Clear All Orders"**
+2. Hộp thoại xác nhận có thể xuất hiện (tùy thuộc vào cấu hình)
+3. Tất cả lệnh racing được xóa khỏi hệ thống
+4. Bảng trở nên trống với thông báo "No racing orders loaded"
+
+
+
+### Giám sát hệ thống
+
+#### Trạng thái sức khỏe
+- **Chỉ báo xanh**: Hệ thống hoạt động bình thường
+- **Chỉ báo đỏ**: Phát hiện vấn đề hệ thống
+
+
+
+
+
+
+
+### Công cụ Debug
+
+Truy cập panel **API Debug** để:
+- Kiểm tra endpoint API
+- Ghi log request/response
+- Chẩn đoán lỗi
+- Khắc phục sự cố kết nối
+
+## Khắc phục sự cố
+
+### Vấn đề thường gặp
+
+#### Vấn đề kết nối
+- **Kiểm tra VRB URL**: Xác minh endpoint VRB chính xác và có thể truy cập
+- **Vấn đề mạng**: Đảm bảo kết nối mạng đến VRB server
+- **Lỗi Timeout**: Tăng giá trị timeout trong settings
+
+
+#### Vấn đề xác thực
+- **API Key không hợp lệ**: Kiểm tra API key chính xác và đang hoạt động
+- **Thiếu API Key**: Đảm bảo API key được thiết lập nếu được yêu cầu
+- **Khóa hết hạn**: Liên hệ quản trị viên để gia hạn khóa
+
+#### Vấn đề dữ liệu
+- **Bảng trống**: Nhấn "Get Orders" để tải dữ liệu
+- **Dữ liệu cũ**: Sử dụng nút refresh để cập nhật thông tin
+- **Lỗi phân tích**: Kiểm tra tính hợp lệ của định dạng thông báo
+
+#### Vấn đề hiệu suất
+- **Tải chậm**: Tăng cài đặt timeout
+- **Sử dụng bộ nhớ cao**: Xóa lệnh định kỳ
+- **Vấn đề trình duyệt**: Thử làm mới trang hoặc xóa cache
+
+### Thông báo lỗi
+
+#### Lỗi API
+- **"Failed to load orders"**: VRB server không khả dụng hoặc cấu hình sai
+- **"Authentication failed"**: API key không hợp lệ hoặc thiếu
+- **"Timeout exceeded"**: Tăng cài đặt timeout hoặc kiểm tra mạng
+
+#### Lỗi hệ thống
+- **"VRB Disconnected"**: Mất kết nối VRB
+- **"System unhealthy"**: Phát hiện vấn đề dịch vụ backend
+- **"Parse error"**: Định dạng thông báo không hợp lệ
+
+
+
+## Hỗ trợ
+
+Để được hỗ trợ kỹ thuật hoặc câu hỏi:
+1. Kiểm tra panel API Debug để có thông tin lỗi chi tiết
+2. Xác minh trạng thái và cấu hình VRB server
+3. Xem lại chỉ báo sức khỏe hệ thống
+4. Liên hệ quản trị viên hệ thống
+
+---
+
+*Hướng dẫn này bao gồm các tính năng và thao tác cần thiết của Vero Racing Front. Để cấu hình chi tiết hoặc tích hợp tùy chỉnh, liên hệ đội ngũ phát triển.*

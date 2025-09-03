@@ -1,0 +1,175 @@
+---
+mode: "frame"
+title: "Tài liệu Vero Racing"
+sidebarTitle: "Trang chủ"
+description: "Hệ thống racing gửi lệnh nhanh chóng đến sàn giao dịch. Khám phá hướng dẫn thiết lập và sử dụng các dịch vụ Vero Racing."
+---
+
+import { Container, Title} from '/snippets/home/utility.mdx';
+import { ProductTiles } from '/snippets/home/product-tiles.mdx';
+import { appCategories } from '/snippets/home/data.mdx';
+import { ProductCard } from '/snippets/home/product-cards.mdx';
+
+<div className="px-5 divide-y divide-gray-100 dark:divide-white/10">
+  <Container>
+    <div className="w-full flex flex-col">
+      <div className="flex flex-col items-start justify-center w-full max-w-4xl text-left">
+        <div
+          className="text-gray-900 dark:text-gray-200 text-5xl font-bold tracking-tight"
+          style={{ fontFamily: 'Inter, system-ui, sans-serif' }}
+        >
+          Tài liệu Vero Racing
+        </div>
+        <p
+          className="text-lg text-gray-600 dark:text-gray-400 text-left mt-4 mb-6 leading-relaxed"
+          style={{ fontFamily: 'Inter, system-ui, sans-serif' }}
+        >
+          Hệ thống tối ưu hóa tốc độ gửi lệnh đến sàn giao dịch. Tài liệu hướng dẫn triển khai và vận hành các dịch vụ Vero Racing.
+        </p>
+        <div className="flex flex-row gap-4 mt-5">
+        <a href="/quickstart">
+          <button
+            type="button"
+            className="px-5 flex items-center font-medium text-sm rounded-full py-2 shadow-sm text-white dark:text-gray-900 bg-primary-dark dark:bg-primary-light hover:opacity-[0.9] hover:bg-primary justify-center"
+          >
+            Bắt đầu ngay
+            <svg
+              className="size-3 ml-2 bg-white dark:bg-gray-900"
+              style={{
+                maskImage: 'url("https://mintlify.b-cdn.net/solid/arrow-right-long.svg")',
+                maskRepeat: 'no-repeat',
+                maskPosition: 'center center'
+              }}
+            />
+          </button>
+          </a>
+        </div>
+      </div>
+    </div>
+
+  </Container>
+   <Container>
+    <div className="flex flex-col w-full mb-8">
+      <div className="flex items-center justify-between w-full">
+        <Title style={{ fontFamily: 'Inter, system-ui, sans-serif', fontWeight: '600' }}>
+          Hệ thống Vero Racing
+        </Title>
+      </div>
+      <p
+        className="text-[#5B616E] dark:text-gray-300 text-lg mb-1 mt-4 leading-relaxed"
+        style={{ fontFamily: 'Inter, system-ui, sans-serif' }}
+      >
+        Vero Racing cung cấp ba dịch vụ chính để tối ưu hóa hiệu suất gửi lệnh đến sàn giao dịch.
+      </p>
+    </div>
+    <div className="dark:hidden block">
+    <CardGroup cols={3}>
+        <ProductCard
+        title="Vero Racing Front (VRF)"
+        description="Giao diện quản trị web để điều khiển hệ thống racing, quản lý lệnh và theo dõi trạng thái giao dịch"
+        href="https://racing.verolabs.co"
+        img="https://mintlify-assets.b-cdn.net/aspen-ai.svg"
+        model="Web UI"
+        type="Frontend"
+        />
+        <ProductCard
+          title="Vero Racing Backend (VRB)"
+          description="Hệ thống backend triển khai tại trung tâm dữ liệu nội bộ, tích hợp với hệ thống quản lý lệnh (OMS)"
+          href="/quickstart"
+          img="https://mintlify-assets.b-cdn.net/aspen-chat.svg"
+          model="Backend"
+          type="Local Service"
+        />
+          <ProductCard
+          title="Vero Order Racing (VOR)"
+          description="Gateway tối ưu hóa để truyền tải lệnh đến sàn giao dịch với hiệu suất cao"
+          href="/quickstart"
+          img="https://mintlify-assets.b-cdn.net/aspen-connect.svg"
+          model="Gateway"
+          type="Optimized"
+        />
+    </CardGroup>
+    </div>
+    <div className="dark:block hidden">
+    <CardGroup cols={3}>
+        <ProductCard
+        title="Vero Racing Front (VRF)"
+        description="Giao diện quản trị web để điều khiển hệ thống racing, quản lý lệnh và theo dõi trạng thái giao dịch"
+        href="https://racing.verolabs.co"
+        img="https://mintlify-assets.b-cdn.net/aspen-dark-ai.svg"
+        model="Web UI"
+        type="Frontend"
+        />
+        <ProductCard
+          title="Vero Racing Backend (VRB)"
+          description="Hệ thống backend triển khai tại trung tâm dữ liệu nội bộ, tích hợp với hệ thống quản lý lệnh (OMS)"
+          href="/quickstart"
+          img="https://mintlify-assets.b-cdn.net/aspen-dark-chat.svg"
+          model="Backend"
+          type="Local Service"
+        />
+          <ProductCard
+          title="Vero Order Racing (VOR)"
+          description="Gateway tối ưu hóa để truyền tải lệnh đến sàn giao dịch với hiệu suất cao"
+          href="/quickstart"
+          img="https://mintlify-assets.b-cdn.net/aspen-dark-connect.svg"
+          model="Gateway"
+          type="Optimized"
+        />
+    </CardGroup>
+    </div>
+    <ul class="not-prose pb-[1px] h-1 min-w-full mt-3 overflow-auto" />
+  </Container>
+  <Container>
+    <div className="flex flex-col w-full mb-8">
+      <div className="flex items-center justify-between w-full">
+        <Title style={{ fontFamily: 'Inter, system-ui, sans-serif', fontWeight: '600' }}>
+          Kiến trúc hệ thống
+        </Title>
+      </div>
+      <p
+        className="text-[#5B616E] dark:text-gray-300 text-lg mb-1 mt-4 leading-relaxed"
+        style={{ fontFamily: 'Inter, system-ui, sans-serif' }}
+      >
+        Kiến trúc hệ thống Vero Racing với ba dịch vụ chính hoạt động đồng bộ để truyền tải lệnh giao dịch.
+      </p>
+    </div>
+    <div className="flex justify-center items-center p-8">
+      <div className="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6 max-w-4xl">
+        <div className="text-center mb-6">
+          <h3 className="text-2xl font-semibold text-gray-900 dark:text-white mb-2" style={{ fontFamily: 'Inter, system-ui, sans-serif' }}>Kiến trúc Vero Racing</h3>
+        </div>
+        <div className="flex flex-col md:flex-row items-center justify-between space-y-4 md:space-y-0 md:space-x-8">
+          <div className="text-center">
+            <div className="bg-blue-100 dark:bg-blue-900 rounded-lg p-4 mb-2">
+              <h4 className="font-semibold text-blue-900 dark:text-blue-100">VRF</h4>
+              <p className="text-sm text-blue-700 dark:text-blue-300">racing.verolabs.co</p>
+            </div>
+            <p className="text-xs text-gray-600 dark:text-gray-400">Web UI</p>
+          </div>
+          <div className="text-blue-500 text-2xl">→</div>
+          <div className="text-center">
+            <div className="bg-green-100 dark:bg-green-900 rounded-lg p-4 mb-2">
+              <h4 className="font-semibold text-green-900 dark:text-green-100">VRB</h4>
+              <p className="text-sm text-green-700 dark:text-green-300">Local DC</p>
+            </div>
+            <p className="text-xs text-gray-600 dark:text-gray-400">Backend</p>
+          </div>
+          <div className="text-green-500 text-2xl">→</div>
+          <div className="text-center">
+            <div className="bg-purple-100 dark:bg-purple-900 rounded-lg p-4 mb-2">
+              <h4 className="font-semibold text-purple-900 dark:text-purple-100">VOR</h4>
+              <p className="text-sm text-purple-700 dark:text-purple-300">Gateway</p>
+            </div>
+            <p className="text-xs text-gray-600 dark:text-gray-400">Exchange</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <ul class="not-prose pb-[1px] h-1 min-w-full mt-3 overflow-auto" />
+  </Container>
+  
+
+
+</div>
+

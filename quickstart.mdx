@@ -1,0 +1,144 @@
+---
+title: 'Hướng dẫn triển khai hệ thống Vero Racing'
+description: ''
+---
+
+### Triển khai Vero Racing Backend (VRB)
+
+<AccordionGroup>
+  <Accordion icon="docker" title="Triển khai Vero Racing Backend (VRB)">
+    Tải và triển khai Docker image của Vero Racing Backend tại trung tâm dữ liệu nội bộ:
+    
+    ```bash
+    # Tạo file .env
+    cat > .env << 'EOF'
+    # API Keys (BẮT BUỘC)
+    KRX_API_KEY=your-krx-api-key
+    USER_API_KEYS=client-key-1,client-key-2,client-key-3
+    
+    # Oracle Database (BẮT BUỘC)
+    ORACLE_CONNECTION_STRING=your-oracle-connection-string
+    ORACLE_USER=your-oracle-username
+    ORACLE_PASSWORD=your-oracle-password
+    
+    # Cấu hình hệ thống
+    FIRM_ID=XXX
+    PROPRIETARY_ACCOUNT_PREFIX=your-prefix
+    FOREIGN_ACCOUNT_PREFIX=your-foreign-prefix
+    EOF
+    
+    # Triển khai VRB
+    docker pull registry.gitlab.com/maithanhtan/docker_cicd/service-krx-order-racing-backend/service-krx-order-racing-backend:latest
+    docker run -d --name vrb \
+      --env-file .env \
+      -p 3000:3000 \
+      registry.gitlab.com/maithanhtan/docker_cicd/service-krx-order-racing-backend/service-krx-order-racing-backend:latest
+    ```
+    
+  </Accordion>
+</AccordionGroup>
+
+### Triển khai Vero Order Racing (VOR)
+
+<AccordionGroup>
+
+<Accordion icon="download" title="Triển khai Vero Order Racing (VOR)">
+  Tải và triển khai file binary thực thi của VOR trên server nội bộ:
+  
+  ```bash
+  # Cài đặt phụ thuộc
+  sudo apt update
+  sudo apt install -y libpcap-dev curl jq
+  
+  # Tải file thực thi
+  wget https://releases.verolabs.co/vero-order-racing-linux-amd64.tar.gz
+  
+  # Giải nén
+  tar -xzf vero-order-racing-linux-amd64.tar.gz
+  cd vero-order-racing
+  
+  # Cấp quyền thực thi
+  chmod +x service-krx-order-racing
+  
+  # Tạo file cấu hình app.json
+  cat > app.json << 'EOF'
+  {
+    "server": {
+      "host": "0.0.0.0",
+      "port": 8080,
+      "api_key": "your-api-key-here"
+    },
+    "fix": {
+      "trade_config_file": "config/krx_trade.cfg",
+      "market_event_config_file": "config/krx_market.cfg", 
+      "trade_internal_config_file": "config/krx_trade_internal.cfg",
+      "market_internal_config_file": "config/krx_market_internal.cfg",
+      "data_dictionary": "config/FIX44.xml",
+      "username": "your-fix-username",
+      "password": "your-fix-password",
+      "logout_before_logon": false,
+      "packet_capture_interface": "eth0",
+      "market_event_port": 30902
+    },
+    "logging": {
+      "level": "DEBUG",
+      "file_path": "logs/krx-preload.log",
+      "warn_file_path": "logs/krx-preload-warn.log"
+    }
+  }
+  EOF
+  
+  # Chạy dịch vụ
+  ./service-krx-order-racing
+  ```
+  
+  <Info>
+   License key sẽ được cung cấp riêng qua email sau khi hoàn tất đăng ký dịch vụ.
+  </Info>
+</Accordion>
+
+</AccordionGroup>
+
+## Kết nối và vận hành hệ thống
+
+Sau khi hoàn tất triển khai VRB và VOR, bạn có thể bắt đầu vận hành hệ thống Vero Racing.
+
+<CardGroup>
+
+<Card title="Truy cập Dashboard" icon="computer" href="https://racing.verolabs.co">
+  Đăng nhập vào Vero Racing Front để quản lý và điều khiển hệ thống racing.
+</Card>
+
+<Card
+  title="Cấu hình VRB endpoint"
+  icon="server"
+  href="/vrb-guide"
+>
+  Thiết lập endpoint VRB trong VRF để kết nối với backend nội bộ.
+</Card>
+
+<Card
+  title="Thiết lập API key"
+  icon="key"
+  href="/vrf-guide"
+>
+  Cấu hình API key để VRF có thể truy cập VRB.
+</Card>
+
+<Card
+  title="Bắt đầu vận hành racing"
+  icon="play"
+  href="/vrf-guide"
+>
+  Hướng dẫn tải lệnh và bắt đầu vận hành racing.
+</Card>
+
+</CardGroup>
+
+## Hỗ trợ kỹ thuật
+
+Nếu gặp vấn đề trong quá trình triển khai hoặc cần hỗ trợ kỹ thuật, vui lòng liên hệ:
+
+- **Email hỗ trợ**: hello@verolabs.co
+- **Hotline & Zalo**: 0995 95 96 97
+- **Dashboard**: [racing.verolabs.co](https://racing.verolabs.co)

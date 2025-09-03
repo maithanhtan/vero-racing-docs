@@ -1,0 +1,99 @@
+---
+title: 'Kiến trúc hệ thống'
+description: 'Tài liệu chi tiết về kiến trúc và cơ chế hoạt động của Vero Racing'
+---
+
+<Info>
+  **Thông tin quan trọng**: Vero Racing tối ưu hóa tốc độ gửi lệnh đến sàn giao dịch.
+</Info>
+
+## Tổng quan kiến trúc hệ thống
+
+Vero Racing sử dụng kiến trúc phân tán với ba dịch vụ chính hoạt động đồng bộ:
+
+### 1. Vero Racing Front (VRF)
+- **Vị trí triển khai**: racing.verolabs.co (Vero self-hosted)
+- **Chức năng chính**: Giao diện quản trị web để điều khiển hệ thống racing, quản lý lệnh và theo dõi trạng thái giao dịch
+- **Yêu cầu truy cập**: Thiết lập VRB endpoint và API key
+
+### 2. Vero Racing Backend (VRB)
+- **Vị trí triển khai**: Trung tâm dữ liệu nội bộ
+- **Chức năng chính**: Hệ thống backend tích hợp với OMS để thu thập thông tin lệnh và chuẩn bị dữ liệu cho racing
+- **Phương thức triển khai**: Docker container với cấu hình môi trường
+
+### 3. Vero Order Racing (VOR)
+- **Vị trí triển khai**: Server nội bộ
+- **Chức năng chính**: Gateway tối ưu hóa để truyền tải lệnh đến sàn giao dịch
+- **Phương thức triển khai**: Binary executable với license key bảo mật
+
+## Luồng hoạt động
+
+<Steps>
+  <Step title="Thu thập dữ liệu lệnh">
+    VRF gửi yêu cầu đến VRB để thu thập danh sách lệnh từ hệ thống OMS
+  </Step>
+  <Step title="Xử lý và chuẩn bị dữ liệu">
+    VRB xử lý và chuẩn bị dữ liệu lệnh cho quá trình racing
+  </Step>
+  <Step title="Truyền tải lệnh">
+    VOR nhận lệnh từ VRB và truyền tải đến sàn giao dịch
+  </Step>
+  <Step title="Cập nhật trạng thái hệ thống">
+    VOR gửi webhook về trạng thái lệnh cho VRB và VRF để đồng bộ hóa
+  </Step>
+</Steps>
+
+## Yêu cầu hệ thống
+
+### VRB (Vero Racing Backend)
+- Docker container environment
+- Kết nối mạng ổn định đến hệ thống OMS
+- Kết nối mạng đến VRF (racing.verolabs.co)
+- Kết nối mạng đến VOR
+
+### VOR (Vero Order Racing)
+- Linux server (Ubuntu 20.04+ được khuyến nghị)
+- Kết nối mạng ổn định đến VRB
+- Kết nối mạng đến sàn giao dịch
+- License key từ đội ngũ hỗ trợ Vero
+
+## Bảo mật
+
+<Warning>
+  Đảm bảo bảo mật API keys và license keys. Không chia sẻ thông tin bảo mật này với bên thứ ba.
+</Warning>
+
+- Tất cả kết nối sử dụng giao thức HTTPS/TLS
+- API keys được mã hóa trong quá trình truyền tải
+- License keys được bảo vệ bởi machine ID
+
+## Giám sát và Ghi nhật ký
+
+- VRB cung cấp logs chi tiết về quá trình xử lý lệnh giao dịch
+- VOR cung cấp metrics về độ trễ và tỷ lệ thành công
+- VRF hiển thị trạng thái real-time của các lệnh racing
+
+## Khắc phục sự cố
+
+<AccordionGroup>
+  <Accordion title="VRB không kết nối được đến VRF">
+    Các bước kiểm tra:
+    1. Kết nối mạng từ VRB đến racing.verolabs.co
+    2. API key đã được cấu hình chính xác
+    3. Firewall không chặn outbound connections
+  </Accordion>
+
+  <Accordion title="VOR không nhận được license">
+    Quy trình khắc phục:
+    1. Chạy VOR lần đầu để lấy Machine ID
+    2. Gửi Machine ID cho đội ngũ hỗ trợ Vero
+    3. Nhận license key và cấu hình lại hệ thống
+  </Accordion>
+
+  <Accordion title="Hiệu suất racing thấp">
+    Các điểm kiểm tra:
+    1. Kết nối mạng đến sàn giao dịch
+    2. Cấu hình VOR optimization settings
+    3. Tài nguyên server (CPU, RAM, Network)
+  </Accordion>
+</AccordionGroup>

@@ -1,24 +1,38 @@
-# vero-racing-docs
+# Vero Racing Documentation
 
-This project was created with the GitHub project creator tool.
+Tài liệu hướng dẫn sử dụng hệ thống Vero Racing - hệ thống racing gửi lệnh nhanh chóng đến sàn giao dịch.
 
-## Project Configuration
+## Giới thiệu
 
-- Project name: vero-racing-docs
-- Project name (lowercase): vero-racing-docs
+Vero Racing là hệ thống tối ưu hóa việc gửi lệnh đến sàn giao dịch với tốc độ cao, bao gồm 3 dịch vụ chính:
 
-## Workflow
+- **Vero Racing Front (VRF)**: Giao diện web tại racing.verolabs.co
+- **Vero Racing Backend (VRB)**: Backend chạy tại DC local, tích hợp với OMS
+- **Vero Order Racing (VOR)**: Gateway tối ưu gửi lệnh đến sàn giao dịch
 
-The repository comes with a pre-configured GitHub Actions workflow that:
-- Builds a Docker image
-- Pushes it to GitLab registry
-- Updates a deployment
-- Sends Telegram notifications
+## Nội dung tài liệu
 
-## GitHub Variables and Secrets
+- Hướng dẫn thiết lập hệ thống
+- Kiến trúc và cách hoạt động
+- Tài liệu API chi tiết
+- Cấu hình và troubleshooting
 
-These variables are set up in the repository:
-- PROJECT_NAME: vero-racing-docs
-- PROJECT_NAME_LOWERCASE: vero-racing-docs
+### Development
 
-Required secrets have also been set up for the workflow to function properly.
+Để chạy tài liệu locally, cài đặt Mintlify CLI:
+
+```
+npm i -g mintlify
+```
+
+Chạy lệnh sau tại thư mục gốc của tài liệu:
+
+```
+mintlify dev
+```
+
+### Hỗ trợ
+
+- **Email**: hello@verolabs.co
+- **Hotline/Zalo**: 0995 95 96 97
+- **VRF Dashboard**: [racing.verolabs.co](https://racing.verolabs.co)

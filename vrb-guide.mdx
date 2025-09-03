@@ -1,0 +1,299 @@
+---
+title: 'Vero Racing Backend - VRB'
+description: ''
+---
+
+**Vero Racing Backend (VRB)** được thiết kế để tích hợp với hệ thống OMS và cung cấp API cho Vero Racing Front. Dịch vụ này hoạt động như cầu nối giữa VRF và hệ thống VOR.
+
+**Tên dịch vụ:** `vero-racing-backend`  
+**Phiên bản:** `1.0.0`  
+**Cổng mặc định:** `3000`  
+**Host mặc định:** `0.0.0.0`
+
+## Bắt đầu nhanh
+
+### 1. Thiết lập môi trường
+
+```bash
+# Tạo file môi trường
+cat > .env << 'EOF'
+# API Keys (BẮT BUỘC)
+KRX_API_KEY=your-krx-service-api-key
+USER_API_KEYS=client-key-1,client-key-2,client-key-3
+
+# Oracle Database (BẮT BUỘC)
+ORACLE_CONNECTION_STRING=localhost:1521/XE
+ORACLE_USER=your_db_username
+ORACLE_PASSWORD=your_db_password
+
+# Business Configuration (BẮT BUỘC)
+FIRM_ID=XXX
+PROPRIETARY_ACCOUNT_PREFIX=XXXP
+FOREIGN_ACCOUNT_PREFIX=XXXF
+
+```
+
+### 2. Chạy với Docker
+
+```bash
+# Pull và chạy image mới nhất
+docker run -d \
+  --name vero-racing-backend \
+  --env-file .env \
+  -p 3000:3000 \
+  registry.gitlab.com/maithanhtan/docker_cicd/service-krx-order-racing-backend/service-krx-order-racing-backend:latest
+
+# Kiểm tra dịch vụ đang chạy
+docker ps
+curl http://localhost:3000/health
+```
+
+
+
+### Biến môi trường tùy chọn
+
+```bash
+# Cấu hình server
+PROXY_HOST=0.0.0.0
+PROXY_PORT=3000
+
+# Cấu hình KRX
+KRX_BASE_URL=http://localhost:8080
+KRX_TIMEOUT=10000
+
+# Logging
+LOG_LEVEL=info
+LOG_FILE=logs/app.log
+LOG_TO_FILE=true
+
+# Oracle Database Pool Settings
+ORACLE_POOL_MIN=1
+ORACLE_POOL_MAX=10
+ORACLE_POOL_INCREMENT=1
+ORACLE_POOL_TIMEOUT=60
+ORACLE_POOL_PING_INTERVAL=60
+
+# Optional: Custom SQL query file
+ORACLE_PRELOAD_QUERY_FILE=./queries/preload_orders.sql
+
+# FIX Message Defaults
+COUNTRY_CODE_KOREA=704
+DEFAULT_INVEST_CODE=1000
+
+
+```
+
+
+
+## Triển khai Docker
+
+Tạo file `docker-compose.yml`:
+
+```yaml
+version: '3.8'
+services:
+  vero-racing-backend:
+    image: registry.gitlab.com/maithanhtan/docker_cicd/service-krx-order-racing-backend/service-krx-order-racing-backend:latest
+    container_name: vero-racing-backend
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    env_file:
+      - .env
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:3000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 10s
+    deploy:
+      resources:
+        limits:
+          memory: 512M
+          cpus: '0.5'
+        reservations:
+          memory: 256M
+          cpus: '0.1'
+```
+
+
+
+## Hướng dẫn vận hành
+
+### Vận hành dịch vụ
+
+#### Khởi động
+```bash
+# Docker Run
+docker run -d \
+  --name vero-racing-backend \
+  --env-file .env \
+  -p 3000:3000 \
+  registry.gitlab.com/maithanhtan/docker_cicd/service-krx-order-racing-backend/service-krx-order-racing-backend:latest
+
+# Docker Compose
+docker-compose up -d
+```
+
+#### Dừng dịch vụ
+```bash
+# Docker Run
+docker stop vero-racing-backend
+
+# Docker Compose
+docker-compose down
+```
+
+### Quản lý dịch vụ
+
+#### Kiểm tra trạng thái dịch vụ
+```bash
+# Health check endpoint
+curl http://localhost:3000/health
+
+# Trạng thái Docker container
+docker ps
+
+
+```
+
+#### Khởi động lại dịch vụ
+```bash
+# Docker Run
+docker restart vero-racing-backend
+
+# Docker Compose
+docker-compose restart
+```
+
+## Logging và giám sát
+
+### Log files
+
+- **Application logs:** `logs/app.log`
+
+- **Console output:** Logging real-time
+
+
+
+### Xem logs
+
+```bash
+# Theo dõi logs container real-time
+docker logs -f vero-racing-backend
+
+# Xem logs theo khoảng thời gian
+docker logs --since="2024-01-01T10:00:00" vero-racing-backend
+
+# Tìm kiếm lỗi
+docker logs vero-racing-backend 2>&1 | grep -i error
+
+# Xem 100 dòng cuối
+docker logs --tail 100 vero-racing-backend
+```
+
+### Giám sát health
+
+#### Health check tích hợp
+```bash
+curl http://localhost:3000/health
+```
+
+**Response:**
+```json
+{
+  "status": "healthy",
+  "timestamp": "2024-01-15T10:30:00.000Z",
+  "oms_connected": true,
+  "orders_count": 25
+}
+```
+
+## Khắc phục sự cố
+
+### Vấn đề thường gặp
+
+#### 1. Dịch vụ không khởi động
+
+**Kiểm tra biến môi trường:**
+```bash
+# Xác minh tất cả biến bắt buộc
+cat .env | grep -E "(KRX_API_KEY|USER_API_KEYS|ORACLE_|FIRM_ID|PROPRIETARY_ACCOUNT_PREFIX|FOREIGN_ACCOUNT_PREFIX)"
+
+
+```
+
+**Kiểm tra port có sẵn:**
+```bash
+# Kiểm tra port 3000 có đang sử dụng
+lsof -i :3000
+
+# Sử dụng port khác
+PROXY_PORT=3001 npm run dev
+```
+
+#### 2. Vấn đề kết nối Oracle
+
+**Test kết nối Oracle:**
+```bash
+# Kiểm tra connection string Oracle
+echo $ORACLE_CONNECTION_STRING
+
+# Kiểm tra thông tin đăng nhập
+echo $ORACLE_USER
+```
+
+#### 3. Lỗi xác thực API
+
+**Xác minh API keys:**
+```bash
+# Kiểm tra định dạng USER_API_KEYS (phân cách bằng dấu phẩy)
+echo $USER_API_KEYS
+
+
+```
+
+#### 4. Vấn đề Docker
+
+**Container không khởi động:**
+```bash
+# Kiểm tra Docker logs
+docker logs vero-racing-backend
+
+# Pull image mới nhất
+docker pull registry.gitlab.com/maithanhtan/docker_cicd/service-krx-order-racing-backend/service-krx-order-racing-backend:latest
+
+# Kiểm tra file môi trường
+docker run --env-file .env registry.gitlab.com/maithanhtan/docker_cicd/service-krx-order-racing-backend/service-krx-order-racing-backend:latest
+```
+
+### Thông báo lỗi
+
+#### Lỗi cấu hình
+- `KRX_API_KEY environment variable is required`
+- `USER_API_KEYS environment variable is required`
+- `ORACLE_CONNECTION_STRING environment variable is required`
+- `FIRM_ID environment variable is required`
+- `PROPRIETARY_ACCOUNT_PREFIX environment variable is required`
+- `FOREIGN_ACCOUNT_PREFIX environment variable is required`
+
+#### Lỗi runtime
+- `Invalid API key` - Kiểm tra cấu hình USER_API_KEYS
+- `Failed to connect to KRX service` - Kiểm tra KRX_BASE_URL và mạng
+- `Database connection failed` - Kiểm tra cấu hình Oracle
+
+
+
+
+
+## Hỗ trợ
+
+Đối với vấn đề kỹ thuật hoặc câu hỏi:
+- Kiểm tra logs dịch vụ để có thông tin lỗi chi tiết
+- Tham khảo tài liệu API
+- Xem lại hướng dẫn triển khai Docker
+- Liên hệ đội ngũ phát triển với thông báo lỗi và logs cụ thể
+
+---
+
+*Hướng dẫn này bao gồm các bước triển khai và vận hành cần thiết của Vero Racing Backend. Để cấu hình chi tiết hoặc tích hợp tùy chỉnh, liên hệ đội ngũ phát triển.*

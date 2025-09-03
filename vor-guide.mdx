@@ -1,0 +1,202 @@
+---
+title: 'Vero Order Racing - VOR'
+description: ''
+---
+
+**Vero Order Racing (VOR)** được thiết kế để xử lý lệnh racing với hiệu suất cao trên sàn giao dịch. Dịch vụ này cung cấp chức năng preload cho xử lý lệnh microsecond.
+
+**Tên dịch vụ:** `vero-order-racing`  
+**Phiên bản:** `1.0.0`  
+**Cổng mặc định:** `8080`  
+**Host mặc định:** `0.0.0.0`
+
+## Bắt đầu nhanh
+
+### 1. Cấu hình ứng dụng
+
+Tạo file `app.json`:
+
+```json
+{
+  "server": {
+    "host": "0.0.0.0",
+    "port": 8080,
+    "api_key": "your-api-key-here"
+  },
+  "fix": {
+    "trade_config_file": "config/krx_trade.cfg",
+    "market_event_config_file": "config/krx_market.cfg", 
+    "trade_internal_config_file": "config/krx_trade_internal.cfg",
+    "market_internal_config_file": "config/krx_market_internal.cfg",
+    "data_dictionary": "config/FIX44.xml",
+    "username": "your-fix-username",
+    "password": "your-fix-password",
+    "logout_before_logon": false,
+    "packet_capture_interface": "eth0",
+    "market_event_port": 30902
+  },
+  "logging": {
+    "level": "DEBUG",
+    "file_path": "logs/krx-preload.log",
+    "warn_file_path": "logs/krx-preload-warn.log"
+  }
+}
+```
+
+### 2. Cài đặt và chạy
+
+```bash
+# Ubuntu/Debian
+sudo apt update
+sudo apt install -y libpcap-dev curl jq
+
+# CentOS/RHEL
+sudo yum install -y libpcap-devel curl jq
+
+# Tải file thực thi
+wget https://releases.verolabs.co/vero-order-racing-linux-amd64.tar.gz
+
+# Giải nén
+tar -xzf vero-order-racing-linux-amd64.tar.gz
+cd vero-order-racing
+
+# Cấp quyền thực thi
+chmod +x service-krx-order-racing
+
+# Chạy dịch vụ
+./service-krx-order-racing
+
+# Kiểm tra dịch vụ đang chạy
+curl http://localhost:8080/health
+```
+
+
+
+
+
+
+
+## Hướng dẫn vận hành
+
+### Vận hành dịch vụ
+
+#### Khởi động
+```bash
+./service-krx-order-racing
+```
+
+#### Dừng dịch vụ
+```bash
+kill -TERM <pid>
+```
+
+### Quản lý dịch vụ
+
+#### Kiểm tra trạng thái dịch vụ
+```bash
+# Health check endpoint
+curl http://localhost:8080/health
+
+# Kiểm tra process đang chạy
+ps aux | grep service-krx-order-racing
+
+# Kiểm tra port đang sử dụng
+netstat -tulpn | grep :8080
+```
+
+## Logging và giám sát
+
+### Log files
+
+- **Application logs:** `logs/krx-preload.log`
+- **Console output:** Logging real-time
+
+### Xem logs
+
+```bash
+# Theo dõi logs real-time
+tail -f logs/krx-preload.log
+
+# Xem logs theo khoảng thời gian
+grep "2024-01-01" logs/krx-preload.log
+
+# Tìm kiếm lỗi
+grep -i error logs/krx-preload.log
+
+# Xem 100 dòng cuối
+tail -100 logs/krx-preload.log
+```
+
+### Giám sát health
+
+#### Health check tích hợp
+```bash
+curl http://localhost:8080/health
+```
+
+**Response:**
+```json
+{
+  "status": "healthy",
+  "timestamp": "2024-01-15T10:30:00.000Z",
+  "fix_connected": true,
+  "preload_count": 25
+}
+```
+
+## Khắc phục sự cố
+
+### Vấn đề thường gặp
+
+#### 1. Dịch vụ không khởi động
+
+**Kiểm tra cấu hình:**
+```bash
+# Xác minh file cấu hình
+cat app.json | jq '.server.api_key'
+cat app.json | jq '.fix.username'
+cat app.json | jq '.fix.password'
+```
+
+**Kiểm tra port có sẵn:**
+```bash
+# Kiểm tra port 8080 có đang sử dụng
+lsof -i :8080
+
+# Sử dụng port khác - chỉnh sửa app.json
+# "server": { "port": 8081 }
+```
+
+#### 2. Vấn đề kết nối FIX
+
+**Test kết nối FIX:**
+```bash
+# Kiểm tra kết nối mạng
+ping exchange-gateway
+telnet exchange-gateway exchange-order-port
+telnet exchange-gateway exchange-market-event-port
+```
+
+### Thông báo lỗi
+
+#### Lỗi cấu hình
+- `Invalid configuration file` - Kiểm tra cú pháp JSON trong app.json
+- `Missing API key` - Kiểm tra cấu hình server.api_key
+- `Missing FIX credentials` - Kiểm tra cấu hình fix.username và fix.password
+
+#### Lỗi runtime
+- `Invalid API key` - Kiểm tra cấu hình server.api_key trong app.json
+- `Failed to connect to FIX gateway` - Kiểm tra kết nối mạng
+- `FIX connection failed` - Kiểm tra cấu hình fix.username và fix.password
+
+## Hỗ trợ
+
+Đối với vấn đề kỹ thuật hoặc câu hỏi:
+- Kiểm tra logs dịch vụ để có thông tin lỗi chi tiết
+- Xác minh trạng thái và cấu hình FIX gateway
+- Xem chỉ báo sức khỏe hệ thống
+- Liên hệ đội ngũ phát triển
+
+---
+
+*Hướng dẫn này bao gồm các bước triển khai và vận hành cần thiết của Vero Order Racing. Để cấu hình chi tiết hoặc tích hợp tùy chỉnh, liên hệ đội ngũ phát triển.*

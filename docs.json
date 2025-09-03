@@ -1,0 +1,65 @@
+{
+  "$schema": "https://mintlify.com/docs.json",
+  "theme": "aspen",
+  "name": "Vero Racing Docs",
+  "colors": {
+    "primary": "#0066cc",
+    "light": "#0066cc", 
+    "dark": "#0066cc"
+  },
+  "appearance": {
+    "default": "light"
+  },
+  "favicon": "/favicon.svg",
+  "css": "/custom.css",
+  "navigation": {
+    "tabs": [
+      {
+        "tab": "Guides",
+        "groups": [
+          {
+            "group": "BẮT ĐẦU",
+            "icon": "https://mintlify-assets.b-cdn.net/compass-2.svg",
+            "pages": [
+              "index",
+              "quickstart"
+            ]
+          },
+          {
+            "group": "HƯỚNG DẪN NÂNG CAO",
+            "icon": "https://mintlify-assets.b-cdn.net/star-2.svg",
+            "pages": [
+              "vrf-guide",
+              "vrb-guide",
+              "vor-guide"
+            ]
+          },
+          {
+            "group": "HỖ TRỢ",
+            "icon": "https://mintlify-assets.b-cdn.net/star-2.svg",
+            "pages": [
+              "lien-he"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "logo": {
+    "light": "/logo/light.svg",
+    "dark": "/logo/dark.svg"
+  },
+  "navbar": {
+    "links": [],
+    "primary": {
+      "type": "button",
+      "label": "Dashboard",
+      "href": "https://racing.verolabs.co"
+    }
+  },
+  "footer": {
+    "socials": {
+      "website": "https://verolabs.co"
+    }
+  }
+}
