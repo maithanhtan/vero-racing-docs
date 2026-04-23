@@ -1,6 +1,7 @@
 ---
 title: 'Vero Order Racing - VOR'
-description: ''
+description: 'Hướng dẫn cài đặt, cấu hình và vận hành Vero Order Racing (VOR)'
+mode: 'wide'
 ---
 
 **Vero Order Racing (VOR)** được thiết kế để xử lý lệnh racing với hiệu suất cao trên sàn giao dịch. Dịch vụ này cung cấp chức năng preload cho xử lý lệnh microsecond.
@@ -31,7 +32,7 @@ Tạo file `app.json`:
     "data_dictionary": "config/FIX44.xml",
     "username": "your-fix-username",
     "password": "your-fix-password",
-    "logout_before_logon": false,
+    "logout_before_logon": false
   },
   "logging": {
     "level": "DEBUG",
@@ -116,7 +117,7 @@ netstat -tulpn | grep :8080
 tail -f logs/krx-preload.log
 
 # Xem logs theo khoảng thời gian
-grep "2024-01-01" logs/krx-preload.log
+grep "2025-01-01" logs/krx-preload.log
 
 # Tìm kiếm lỗi
 grep -i error logs/krx-preload.log
@@ -136,7 +137,7 @@ curl http://localhost:8080/health
 ```json
 {
   "status": "healthy",
-  "timestamp": "2024-01-15T10:30:00.000Z",
+  "timestamp": "2025-01-15T10:30:00.000Z",
   "fix_connected": true,
   "preload_count": 25
 }

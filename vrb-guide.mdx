@@ -1,6 +1,7 @@
 ---
 title: 'Vero Racing Backend - VRB'
-description: ''
+description: 'Hướng dẫn triển khai, cấu hình và vận hành Vero Racing Backend (VRB)'
+mode: 'wide'
 ---
 
 **Vero Racing Backend (VRB)** được thiết kế để tích hợp với hệ thống OMS và cung cấp API cho Vero Racing Front. Dịch vụ này hoạt động như cầu nối giữa VRF và hệ thống VOR.
@@ -30,7 +31,7 @@ ORACLE_PASSWORD=your_db_password
 FIRM_ID=XXX
 PROPRIETARY_ACCOUNT_PREFIX=XXXP
 FOREIGN_ACCOUNT_PREFIX=XXXF
-
+EOF
 ```
 
 ### 2. Chạy với Docker
@@ -183,7 +184,7 @@ docker-compose restart
 docker logs -f vero-racing-backend
 
 # Xem logs theo khoảng thời gian
-docker logs --since="2024-01-01T10:00:00" vero-racing-backend
+docker logs --since="2025-01-01T10:00:00" vero-racing-backend
 
 # Tìm kiếm lỗi
 docker logs vero-racing-backend 2>&1 | grep -i error
@@ -203,7 +204,7 @@ curl http://localhost:3000/health
 ```json
 {
   "status": "healthy",
-  "timestamp": "2024-01-15T10:30:00.000Z",
+  "timestamp": "2025-01-15T10:30:00.000Z",
   "oms_connected": true,
   "orders_count": 25
 }

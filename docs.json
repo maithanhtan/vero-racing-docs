@@ -1,53 +1,80 @@
 {
   "$schema": "https://mintlify.com/docs.json",
-  "theme": "aspen",
+  "theme": "maple",
   "name": "Vero Racing Docs",
+  "seo": {
+    "indexing": "all",
+    "metatags": {
+      "description": "Hướng dẫn sử dụng hệ thống Vero Racing — thiết lập, triển khai và vận hành các dịch vụ gửi lệnh tốc độ cao.",
+      "og:title": "Vero Racing Docs",
+      "og:description": "Tài liệu hướng dẫn triển khai và vận hành Vero Racing",
+      "og:site_name": "Vero Racing Docs"
+    }
+  },
   "colors": {
-    "primary": "#0066cc",
-    "light": "#0066cc", 
-    "dark": "#0066cc"
+    "primary": "#16a34a",
+    "light": "#4ade80",
+    "dark": "#15803d"
   },
   "appearance": {
-    "default": "light"
+    "default": "light",
+    "strict": false
   },
-  "favicon": "/favicon.svg",
+  "fonts": {
+    "heading": {
+      "family": "Be Vietnam Pro"
+    },
+    "body": {
+      "family": "Noto Sans"
+    }
+  },
+  "icons": {
+    "library": "fontawesome"
+  },
+  "background": {
+    "decoration": "grid"
+  },
+  "favicon": "/vero.ico",
   "css": "/custom.css",
   "navigation": {
-    "tabs": [
+    "style": "minimal",
+    "groups": [
       {
-        "tab": "Guides",
-        "groups": [
-          {
-            "group": "BẮT ĐẦU",
-            "icon": "https://mintlify-assets.b-cdn.net/compass-2.svg",
-            "pages": [
-              "index",
-              "quickstart"
-            ]
-          },
-          {
-            "group": "HƯỚNG DẪN NÂNG CAO",
-            "icon": "https://mintlify-assets.b-cdn.net/star-2.svg",
-            "pages": [
-              "vrf-guide",
-              "vrb-guide",
-              "vor-guide"
-            ]
-          },
-          {
-            "group": "HỖ TRỢ",
-            "icon": "https://mintlify-assets.b-cdn.net/star-2.svg",
-            "pages": [
-              "lien-he"
-            ]
-          }
+        "group": "Home",
+        "pages": [
+          "index"
+        ]
+      },
+      {
+        "group": "Bắt đầu",
+        "pages": [
+          "quickstart",
+          "development"
+        ]
+      },
+      {
+        "group": "Hướng dẫn nâng cao",
+        "pages": [
+          "vrf-guide",
+          "vrb-guide",
+          "vor-guide"
+        ]
+      },
+      {
+        "group": "Hỗ trợ",
+        "pages": [
+          "lien-he"
         ]
       }
-    ]
+    ],
+    "global": {}
+  },
+  "sidebar": {
+    "items": "border"
   },
   "logo": {
-    "light": "/logo/light.svg",
-    "dark": "/logo/dark.svg"
+    "light": "/logo/vero.png",
+    "dark": "/logo/vero-dark.png"
   },
   "navbar": {
     "links": [],
