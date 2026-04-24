@@ -10,11 +10,17 @@
 nav img,
 header img,
 [class*="logo"] img,
-a[href="/"] img {
+a[href="/"] img,
+img.nav-logo,
+img[class*="nav-logo"],
+:where(a[href="/"]) img.nav-logo,
+:where(header, nav) img.nav-logo {
   height: 56px !important;
   width: auto !important;
+  max-width: unset !important;
   max-height: 56px !important;
-  min-height: 56px !important;
+  min-height: unset !important;
+  border-radius: 0 !important;
 }
 
 /* Logo container - remove border and add padding */
@@ -294,8 +300,8 @@ main:has(.intro-shell) article {
   color: rgba(248, 250, 252, 0.9);
 }
 
-/* Full width images */
-img {
+/* Full width images — exclude logo and nav images */
+img:not(img.nav-logo):not(img[class*="nav-logo"]):not(header img):not(nav img):not([class*="logo"] img):not(a[href="/"] img) {
   width: 100%;
   border-radius: 16px;
 }
