@@ -34,7 +34,7 @@
   "background": {
     "decoration": "grid"
   },
-  "favicon": "/vero.ico",
+  "favicon": "/favicon.png",
   "css": "/custom.css",
   "navigation": {
     "style": "minimal",
@@ -73,8 +73,8 @@
     "items": "border"
   },
   "logo": {
-    "light": "/logo/vero.png",
-    "dark": "/logo/vero-dark.png"
+    "light": "/logo/vero-logo.png",
+    "dark": "/logo/vero-logo.png"
   },
   "navbar": {
     "links": [],
