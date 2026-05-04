@@ -34,7 +34,7 @@
   "background": {
     "decoration": "grid"
   },
-  "favicon": "/favicon.png",
+  "favicon": "/logo/favicon.png",
   "css": "/custom.css",
   "navigation": {
     "style": "minimal",
